@@ -16,7 +16,7 @@ parser_ProcessPayment.add_argument('ExpirationDate', type=inputs.datetime_from_i
 parser_ProcessPayment.add_argument('SecurityCode', type=str, required=False, help="Enter 3 digit security code")
 parser_ProcessPayment.add_argument('Amount', type=int, required=True, help="Enter amount to be processed.")
 
-@ns.route("/", methods=["POST"])
+@ns.route("/", methods=["POST", "GET"])
 @ns.expect(parser_ProcessPayment, validate=True)
 class ProcessPayment(Resource):            
     def post(self):   
