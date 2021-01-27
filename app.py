@@ -6,10 +6,10 @@ app.config["JSON_SORT_KEYS"] = False
 app.debug = True
 
 swagger = Swagger(app)
-from datetime import datetime
+#from datetime import datetime
 
 
-@ns.route('/hello_world', methods=['GET','POST'])
+@app.route('/hello_world', methods=['GET','POST'])
 def say_hello():
     '''
     this is test route for flask app
