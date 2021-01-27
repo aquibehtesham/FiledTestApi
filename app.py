@@ -1,12 +1,13 @@
-from flask import Flask, request
-from flask_restplus import Resource, Api, reqparse, inputs
+from flask import Flask, request, jsonify
+from flasgger import Swagger
+
+app = Flask(__name__)
+app.config["JSON_SORT_KEYS"] = False
+app.debug = True
+
+swagger = Swagger(app)
 from datetime import datetime
 
-app = Flask(__name__)                 
-api = Api(app)    
-
-# define the name spaces
-ns = api.namespace("ProcessPayment", description="Process Payment Gateways")
 
 @ns.route('/hello_world', methods=['GET','POST'])
 def say_hello():
@@ -16,7 +17,7 @@ def say_hello():
     return "Hello World!"
 
 
-
+"""
 parser_ProcessPayment = api.parser()
 
 parser_ProcessPayment.add_argument('CreditCardNumber', type=str, required=True, help="Enter valid credit card number.")
@@ -103,6 +104,7 @@ def validate_credit_card(number_str):
     else:
         print("Sorry, but this is not a Credit Card Number!")
     return valid    
+"""    
     
 if __name__ == '__main__':
     #app.run(debug=True, use_reloader=True)
