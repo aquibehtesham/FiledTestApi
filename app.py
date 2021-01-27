@@ -96,5 +96,8 @@ def validate_credit_card(number_str):
     return valid    
     
 if __name__ == '__main__':
-    app.run(debug=True, use_reloader=True)
+    #app.run(debug=True, use_reloader=True)
+    app.debug = True
+    app.run(host="0.0.0.0",port=5777)
+    
 
