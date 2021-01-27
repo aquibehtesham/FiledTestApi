@@ -3,10 +3,19 @@ from flask_restplus import Resource, Api, reqparse, inputs
 from datetime import datetime
 
 app = Flask(__name__)                 
-api = Api(app)                         
+api = Api(app)    
 
 # define the name spaces
 ns = api.namespace("ProcessPayment", description="Process Payment Gateways")
+
+@ns.route('/hello_world', methods=['GET','POST'])
+def say_hello():
+    '''
+    this is test route for flask app
+    '''
+    return "Hello World!"
+
+
 
 parser_ProcessPayment = api.parser()
 
