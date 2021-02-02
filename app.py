@@ -40,6 +40,52 @@ def test_service():
 
     return jsonify(Entered_text=input_text)
 
+@app.route('/process_payment', methods=['GET'])
+def process_payment():
+    """        
+    API route to process payment details
+    ---
+    tags:
+      - Get Response from process_payment Service
+    parameters:
+        - name: CreditCardNumber
+          in: query
+          type: string
+          required: true
+          description: Enter valid credit card number. 
+         - name: CardHolder
+          in: query
+          type: string
+          required: true
+          description: Enter card holder name.  
+         - name: ExpirationDate
+          in: query
+          type: string
+          required: true
+          description: Enter date of expiry in YYYY-mm-dd format. 
+         - name: SecurityCode
+          in: query
+          type: string
+          required: false
+          description: Enter 3 digit security code.  
+         - name: Amount
+          in: query
+          type: integer
+          required: true
+          description: Enter amount to be processed. 
+        
+    responses:
+      500:
+        description: Error Please enter the text data!
+      200:
+        description: Successfully processed data.
+    """
+    
+
+    input_text = request.args.get("input_text")
+
+    return jsonify(Entered_text=input_text)
+
 
 
 if __name__  == '__main__':    
