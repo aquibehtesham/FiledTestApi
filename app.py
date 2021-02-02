@@ -56,12 +56,7 @@ def process_payment():
           in: query
           type: string
           required: true
-          description: Enter card holder name.  
-        - name: ExpirationDate
-          in: query
-          type: string
-          required: true
-          description: Enter date of expiry in YYYY-mm-dd format. 
+          description: Enter card holder name.           
         - name: SecurityCode
           in: query
           type: string
@@ -96,9 +91,7 @@ def process_payment():
             #    return {"status" : "error", "error_code" : "400", "error_description" : "The request is invalid"}
         else: return {"status" : "error", "error_code" : "400", "error_description" : "The request is invalid"}
     except:
-        return {"status" : "error", "error_code" : "500", "error_description" : "Internal server error"}
-    #input_text = request.args.get("input_text")
-    #return jsonify(Entered_text=input_text)
+        return {"status" : "error", "error_code" : "500", "error_description" : "Internal server error"}    
     
 def validate_expiry_date(exp_date_str):
     exp_date_obj = datetime.fromisoformat(exp_date_str)
@@ -162,4 +155,4 @@ def validate_credit_card(number_str):
 if __name__  == '__main__':    
     app.debug = True
     app.run(host="0.0.0.0",port=5777)
-    #http://localhost:5777/apidocs/#/get_movie_details
+    
