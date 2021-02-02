@@ -84,16 +84,16 @@ def process_payment():
         inp_json = request.args 
         payment_gateway = None               
         if validate_credit_card(inp_json.get("CreditCardNumber")):            
-            if validate_expiry_date(inp_json.get("ExpirationDate")):            
-                if float(inp_json.get("Amount")) <= 20:                    
-                    payment_gateway = "CheapPaymentGateway"
-                elif 21 <= float(inp_json.get("Amount")) <= 500:                     
-                    payment_gateway = "ExpensivePaymentGateway"
-                elif float(inp_json.get("Amount")) > 500:                    
-                    payment_gateway = "PremiumPaymentGateway"
-                return  {"status" : payment_gateway, "error_code" : "200", "error_description" : "Payment is processed"}
-            else:
-                return {"status" : "error", "error_code" : "400", "error_description" : "The request is invalid"}
+            #if validate_expiry_date(inp_json.get("ExpirationDate")):            
+            if float(inp_json.get("Amount")) <= 20:                    
+                payment_gateway = "CheapPaymentGateway"
+            elif 21 <= float(inp_json.get("Amount")) <= 500:                     
+                payment_gateway = "ExpensivePaymentGateway"
+            elif float(inp_json.get("Amount")) > 500:                    
+                payment_gateway = "PremiumPaymentGateway"
+            return  {"status" : payment_gateway, "error_code" : "200", "error_description" : "Payment is processed"}
+            #else:
+            #    return {"status" : "error", "error_code" : "400", "error_description" : "The request is invalid"}
         else: return {"status" : "error", "error_code" : "400", "error_description" : "The request is invalid"}
     except:
         return {"status" : "error", "error_code" : "500", "error_description" : "Internal server error"}
