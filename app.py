@@ -27,13 +27,7 @@ def test_service():
           in: query
           type: string
           required: true
-          description: Enter text to test the service api
-    responses:
-      500:
-        description: Error Please enter the text data!
-      200:
-        description: Movie Details
-                   
+          description: Enter text to test the service api                       
     """
     
 
