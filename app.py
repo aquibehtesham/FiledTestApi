@@ -1,43 +1,104 @@
-from flask import Flask, request
-from flask_restplus import Resource, Api, reqparse, inputs
+from flask import Flask, request, jsonify
+from flasgger import Swagger
 from datetime import datetime
 
-app = Flask(__name__)                 
-api = Api(app)                         
+app = Flask(__name__)
+app.config["JSON_SORT_KEYS"] = False
+app.debug = True
 
-# define the name spaces
-ns = api.namespace("ProcessPayment", description="Process Payment Gateways")
+swagger = Swagger(app)
 
-parser_ProcessPayment = api.parser()
+@app.route('/hello_world', methods=['GET','POST'])
+def say_hello():
+    '''
+    this is test route for flask app
+    '''
+    return "Hello World!"
 
-parser_ProcessPayment.add_argument('CreditCardNumber', type=str, required=True, help="Enter valid credit card number.")
-parser_ProcessPayment.add_argument('CardHolder', type=str, required=True, help="Enter card holder name.")
-parser_ProcessPayment.add_argument('ExpirationDate', type=inputs.datetime_from_iso8601, required=True, help="Enter date of expiry in YYYY-mm-dd format.")
-parser_ProcessPayment.add_argument('SecurityCode', type=str, required=False, help="Enter 3 digit security code")
-parser_ProcessPayment.add_argument('Amount', type=int, required=True, help="Enter amount to be processed.")
+@app.route('/test_service', methods=['GET'])
+def test_service():
+    """        
+    API route to get Response
+    ---
+    tags:
+      - Get Response from test_service Service
+    parameters:
+        - name: input_text
+          in: query
+          type: string
+          required: true
+          description: Enter text to test the service api  
+    responses:
+      500:
+        description: Error Please enter the text data!
+      200:
+        description: Successfully processed data.
+    """    
+    input_text = request.args.get("input_text")
+    return jsonify(Entered_text=input_text)
 
-@ns.route("/", methods=["POST", "GET"])
-@ns.expect(parser_ProcessPayment, validate=True)
-class ProcessPayment(Resource):            
-    def post(self):   
-        try:
-            inp_json = request.args 
-            payment_gateway = None               
-            if validate_credit_card(inp_json.get("CreditCardNumber")):            
-                if validate_expiry_date(inp_json.get("ExpirationDate")):            
-                    if float(inp_json.get("Amount")) <= 20:                    
-                        payment_gateway = "CheapPaymentGateway"
-                    elif 21 <= float(inp_json.get("Amount")) <= 500:                     
-                        payment_gateway = "ExpensivePaymentGateway"
-                    elif float(inp_json.get("Amount")) > 500:                    
-                        payment_gateway = "PremiumPaymentGateway"
-                    return  {"status" : payment_gateway, "error_code" : "200", "error_description" : "Payment is processed"}
-                else:
-                    return {"status" : "error", "error_code" : "400", "error_description" : "The request is invalid"}
-            else: return {"status" : "error", "error_code" : "400", "error_description" : "The request is invalid"}
-        except:
-            return {"status" : "error", "error_code" : "500", "error_description" : "Internal server error"}
+####################################################################################################################
 
+@app.route('/process_payment', methods=['GET'])
+def process_payment():
+    """        
+    API route to process payment details
+    ---
+    tags:
+      - Get Response from process_payment Service
+    parameters:
+        - name: CreditCardNumber
+          in: query
+          type: string
+          required: true
+          description: Enter valid credit card number. 
+        - name: CardHolder
+          in: query
+          type: string
+          required: true
+          description: Enter card holder name.  
+        - name: ExpirationDate
+          in: query
+          type: string
+          required: true
+          description: Enter date of expiry in YYYY-mm-dd format. 
+        - name: SecurityCode
+          in: query
+          type: string
+          required: false
+          description: Enter 3 digit security code.  
+        - name: Amount
+          in: query
+          type: integer
+          required: true
+          description: Enter amount to be processed. 
+        
+    responses:
+      500:
+        description: Error Please enter the text data!
+      200:
+        description: Successfully processed data.
+    """
+    
+    try:
+        inp_json = request.args 
+        payment_gateway = None               
+        if validate_credit_card(inp_json.get("CreditCardNumber")):            
+            #if validate_expiry_date(inp_json.get("ExpirationDate")):            
+            if float(inp_json.get("Amount")) <= 20:                    
+                payment_gateway = "CheapPaymentGateway"
+            elif 21 <= float(inp_json.get("Amount")) <= 500:                     
+                payment_gateway = "ExpensivePaymentGateway"
+            elif float(inp_json.get("Amount")) > 500:                    
+                payment_gateway = "PremiumPaymentGateway"
+            return  {"status" : payment_gateway, "error_code" : "200", "error_description" : "Payment is processed"}
+            #else:
+            #    return {"status" : "error", "error_code" : "400", "error_description" : "The request is invalid"}
+        else: return {"status" : "error", "error_code" : "400", "error_description" : "The request is invalid"}
+    except:
+        return {"status" : "error", "error_code" : "500", "error_description" : "Internal server error"}
+    #input_text = request.args.get("input_text")
+    #return jsonify(Entered_text=input_text)
     
 def validate_expiry_date(exp_date_str):
     exp_date_obj = datetime.fromisoformat(exp_date_str)
@@ -95,6 +156,10 @@ def validate_credit_card(number_str):
         print("Sorry, but this is not a Credit Card Number!")
     return valid    
     
-if __name__ == '__main__':
-    app.run(debug=True, use_reloader=True)
 
+
+
+if __name__  == '__main__':    
+    app.debug = True
+    app.run(host="0.0.0.0",port=5777)
+    #http://localhost:5777/apidocs/#/get_movie_details
