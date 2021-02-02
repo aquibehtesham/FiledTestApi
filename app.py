@@ -15,9 +15,13 @@ def say_hello():
     '''
     return "Hello World!"
 
-@app.route('/get_movie_details')
+@app.route('/get_movie_details', methods=['GET','POST'])
 def movie_details():
     """        
+    API route to get Movie Details
+    ---
+    tags:
+      - Get Imdb Ratings of the Movie
     parameters:
         - name: Movie
           in: query
