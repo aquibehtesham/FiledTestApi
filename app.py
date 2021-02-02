@@ -20,8 +20,7 @@ def test_service():
     """        
     API route to get Response
     ---
-    tags:
-      - Get Response from Test Service
+   
     parameters:
         - name: input_text
           in: query
