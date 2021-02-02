@@ -15,6 +15,64 @@ def say_hello():
     '''
     return "Hello World!"
 
+@app.route('/get_movie_details')
+def movie_details():
+    """
+    API route to get Movie Details
+    ---
+    tags:
+      - Get Imdb Ratings of the Movie
+    parameters:
+        - name: Movie
+          in: query
+          type: string
+          required: true
+          description: Enter Movie name as same as in IMDb website
+    responses:
+      500:
+        description: Error Please enter the correct movie name as same as in Imdb website!
+      200:
+        description: Movie Details
+        schema:
+          id: Movie details (API Response)
+          properties:
+            Title:
+              type: string
+              description: The movie title
+              default: 'NA'
+            
+            # Plot:
+            #   type: string
+            #   description: The movie plot
+            #   default: 'NA'
+            # Plot_Outline:
+            #   type: string
+            #   description: The movie plot-outline
+            #   default: 'NA'
+            # Synopsis:
+            #   type: string
+            #   description: The movie Synopsis
+            #   default: 'NA'
+    """
+    
+
+    movie_name = request.args.get("Movie")
+
+    print("movie name - ", movie_name)
+
+    
+
+
+    return jsonify(Title=movie_name
+                   # _="---  Plot  ---",
+                   # Plot=plot,
+                   # __="---  Plot Outline  ---",
+                   # Plot_Outline=plot_outline,
+                   # ___="---  synopsis  ---",
+                   # Synopsis = synopsis
+                   )
+
+
 
 if __name__  == '__main__':
     # app.config["JSON_SORT_KEYS"] = False
