@@ -33,29 +33,17 @@ def test_service():
         description: Error Please enter the text data!
       200:
         description: Movie Details
-        schema:
-          id: Movie details (API Response)
-          properties:
-            Title:
-              type: string
-              description: The movie title
-              default: 'NA'            
+                   
     """
     
 
-    movie_name = request.args.get("Movie")
+    input_text = request.args.get("input_text")
 
-    print("movie name - ", movie_name)
-
-    
-
-
-    return jsonify(Title=movie_name)
+    return jsonify(Entered_text=input_text)
 
 
 
-if __name__  == '__main__':
-    # app.config["JSON_SORT_KEYS"] = False
+if __name__  == '__main__':    
     app.debug = True
     app.run(host="0.0.0.0",port=5777)
     #http://localhost:5777/apidocs/#/get_movie_details
