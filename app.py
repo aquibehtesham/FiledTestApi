@@ -17,11 +17,7 @@ def say_hello():
 
 @app.route('/get_movie_details')
 def movie_details():
-    """
-    API route to get Movie Details
-    ---
-    tags:
-      - Get Imdb Ratings of the Movie
+    """        
     parameters:
         - name: Movie
           in: query
