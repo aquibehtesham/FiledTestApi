@@ -53,22 +53,22 @@ def process_payment():
           type: string
           required: true
           description: Enter valid credit card number. 
-         - name: CardHolder
+        - name: CardHolder
           in: query
           type: string
           required: true
           description: Enter card holder name.  
-         - name: ExpirationDate
+        - name: ExpirationDate
           in: query
           type: string
           required: true
           description: Enter date of expiry in YYYY-mm-dd format. 
-         - name: SecurityCode
+        - name: SecurityCode
           in: query
           type: string
           required: false
           description: Enter 3 digit security code.  
-         - name: Amount
+        - name: Amount
           in: query
           type: integer
           required: true
