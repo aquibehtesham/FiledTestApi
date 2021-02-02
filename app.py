@@ -15,22 +15,22 @@ def say_hello():
     '''
     return "Hello World!"
 
-@app.route('/get_movie_details', methods=['GET','POST'])
-def movie_details():
+@app.route('/test_service', methods=['GET'])
+def test_service():
     """        
-    API route to get Movie Details
+    API route to get Response
     ---
     tags:
-      - Get Imdb Ratings of the Movie
+      - Get Response from Test Service
     parameters:
-        - name: Movie
+        - name: input_text
           in: query
           type: string
           required: true
-          description: Enter Movie name as same as in IMDb website
+          description: Enter text to test the service api
     responses:
       500:
-        description: Error Please enter the correct movie name as same as in Imdb website!
+        description: Error Please enter the text data!
       200:
         description: Movie Details
         schema:
@@ -39,20 +39,7 @@ def movie_details():
             Title:
               type: string
               description: The movie title
-              default: 'NA'
-            
-            # Plot:
-            #   type: string
-            #   description: The movie plot
-            #   default: 'NA'
-            # Plot_Outline:
-            #   type: string
-            #   description: The movie plot-outline
-            #   default: 'NA'
-            # Synopsis:
-            #   type: string
-            #   description: The movie Synopsis
-            #   default: 'NA'
+              default: 'NA'            
     """
     
 
@@ -63,14 +50,7 @@ def movie_details():
     
 
 
-    return jsonify(Title=movie_name
-                   # _="---  Plot  ---",
-                   # Plot=plot,
-                   # __="---  Plot Outline  ---",
-                   # Plot_Outline=plot_outline,
-                   # ___="---  synopsis  ---",
-                   # Synopsis = synopsis
-                   )
+    return jsonify(Title=movie_name)
 
 
 
